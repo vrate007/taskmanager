@@ -1,6 +1,7 @@
 package com.taskmanager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TaskManager {
@@ -18,5 +19,18 @@ public class TaskManager {
 
     public List<Task> getAllTasks() {
         return tasks;
+    }
+
+    // видалення
+    public boolean removeTask(long id) {
+        Iterator<Task> iterator = tasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId() == id) {
+                iterator.remove();
+                return true; // Задача знайдена і видалена
+            }
+        }
+        return false; // Задача не знайдена
     }
 }
