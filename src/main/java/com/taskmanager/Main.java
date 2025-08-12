@@ -1,5 +1,6 @@
 package com.taskmanager;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +13,7 @@ public class Main {
 
         // Додамо декілька задач для тестування
         manager.addTask("Вивчити Java");
+        manager.addTask("Написати звіт");
         manager.addTask("Написати код");
 
         do {
@@ -19,8 +21,10 @@ public class Main {
             System.out.println("1. Додати нову задачу");
             System.out.println("2. Показати всі задачі");
             System.out.println("3. Видалити задачу");
-            System.out.println("4. Змінити статус задачі"); // Нова опція
-            System.out.println("5. Вийти");
+            System.out.println("4. Змінити статус задачі");
+            System.out.println("5. Змінити пріорітет задачі");
+            System.out.println("6. Знайти задачу за назвою");
+            System.out.println("7. Вийти");
             System.out.print("Ваш вибір: ");
 
             userInput = scanner.nextLine();
@@ -65,13 +69,40 @@ public class Main {
                     }
                     break;
                 case "5":
+                    try {
+                        System.out.print("Введіть ID задачі для зміни пріорітету: ");
+                        long taskId = Long.parseLong(scanner.nextLine());
+                        System.out.print("Введіть новий пріорітет задачі (LOW, MEDIUM, HIGH): ");
+                        String priorityInput = scanner.nextLine().toUpperCase();
+                        TaskPriority newPriority = TaskPriority.valueOf(priorityInput);
+                        if (!manager.updateTaskPriority(taskId, newPriority)) {
+                            System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Помилка: ID повинен бути числом.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Помилка: Некоректний статус. Використовуйте NEW, IN_PROGRESS або COMPLETED.");
+                    }
+                    break;
+                case "6":
+                    System.out.print("Введіть назву або частину назви для пошуку: ");
+                    String searchTitle = scanner.nextLine();
+                    List<Task> foundTasks = manager.findTasksByTitle(searchTitle);
+                    if (foundTasks.isEmpty()) {
+                        System.out.println("Задачі з такою назвою не знайдено.");
+                    } else {
+                        System.out.println("\n--- Знайдені задачі ---");
+                        foundTasks.forEach(System.out::println);
+                    }
+                    break;
+                case "7":
                     System.out.println("Завершення програми.");
                     break;
                 default:
                     System.out.println("Некоректний вибір. Спробуйте ще раз.");
                     break;
             }
-        } while (!userInput.equals("5"));
+        } while (!userInput.equals("6"));
 
         scanner.close();
     }

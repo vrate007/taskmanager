@@ -33,7 +33,6 @@ public class TaskManager {
         return false;
     }
 
-    // Новий метод для зміни статусу
     public boolean updateTaskStatus(long id, TaskStatus newStatus) {
         for (Task task : tasks) {
             if (task.getId() == id) {
@@ -43,5 +42,31 @@ public class TaskManager {
             }
         }
         return false;
+    }
+
+    public boolean updateTaskPriority(long id, TaskPriority newPriority) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setProirity(newPriority);
+                System.out.println("Пріорітут задачі з ID " + id + " змінено на " + newPriority);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Новий метод для пошуку за назвою
+    public List<Task> findTasksByTitle(String title) {
+        List<Task> foundTasks = new ArrayList<>();
+        if (title == null || title.trim().isEmpty()) {
+            return foundTasks;
+        }
+        String searchTitle = title.toLowerCase();
+        for (Task task : tasks) {
+            if (task.getTitle().toLowerCase().contains(searchTitle)) {
+                foundTasks.add(task);
+            }
+        }
+        return foundTasks;
     }
 }
