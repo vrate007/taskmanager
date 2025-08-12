@@ -4,10 +4,12 @@ public class Task {
     private static long nextId = 1;
     private final long id;
     private String title;
+    private TaskStatus status; // Додаємо поле статусу
 
     public Task(String title) {
         this.id = nextId++;
         this.title = title;
+        this.status = TaskStatus.NEW; // Нова задача починається зі статусу NEW
     }
 
     public long getId() {
@@ -18,8 +20,15 @@ public class Task {
         return title;
     }
 
-    @Override
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
     public String toString() {
-        return "Task [id=" + id + ", title=" + title + "]";
+        return "Task [id=" + id + ", title=" + title + ", status=" + status + "]";
     }
 }

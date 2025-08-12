@@ -21,16 +21,27 @@ public class TaskManager {
         return tasks;
     }
 
-    // видалення
     public boolean removeTask(long id) {
         Iterator<Task> iterator = tasks.iterator();
         while (iterator.hasNext()) {
             Task task = iterator.next();
             if (task.getId() == id) {
                 iterator.remove();
-                return true; // Задача знайдена і видалена
+                return true;
             }
         }
-        return false; // Задача не знайдена
+        return false;
+    }
+
+    // Новий метод для зміни статусу
+    public boolean updateTaskStatus(long id, TaskStatus newStatus) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setStatus(newStatus);
+                System.out.println("Статус задачі з ID " + id + " змінено на " + newStatus);
+                return true;
+            }
+        }
+        return false;
     }
 }

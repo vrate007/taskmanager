@@ -1,6 +1,5 @@
 package com.taskmanager;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,13 +14,13 @@ public class Main {
         manager.addTask("Вивчити Java");
         manager.addTask("Написати код");
 
-        // Основний цикл програми
         do {
             System.out.println("\nОпції:");
             System.out.println("1. Додати нову задачу");
             System.out.println("2. Показати всі задачі");
-            System.out.println("3. Видалити задачу"); // Нова опція
-            System.out.println("4. Вийти");
+            System.out.println("3. Видалити задачу");
+            System.out.println("4. Змінити статус задачі"); // Нова опція
+            System.out.println("5. Вийти");
             System.out.print("Ваш вибір: ");
 
             userInput = scanner.nextLine();
@@ -50,13 +49,29 @@ public class Main {
                     }
                     break;
                 case "4":
+                    try {
+                        System.out.print("Введіть ID задачі для зміни статусу: ");
+                        long taskId = Long.parseLong(scanner.nextLine());
+                        System.out.print("Введіть новий статус (NEW, IN_PROGRESS, COMPLETED): ");
+                        String statusInput = scanner.nextLine().toUpperCase();
+                        TaskStatus newStatus = TaskStatus.valueOf(statusInput);
+                        if (!manager.updateTaskStatus(taskId, newStatus)) {
+                            System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Помилка: ID повинен бути числом.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Помилка: Некоректний статус. Використовуйте NEW, IN_PROGRESS або COMPLETED.");
+                    }
+                    break;
+                case "5":
                     System.out.println("Завершення програми.");
                     break;
                 default:
                     System.out.println("Некоректний вибір. Спробуйте ще раз.");
                     break;
             }
-        } while (!userInput.equals("4"));
+        } while (!userInput.equals("5"));
 
         scanner.close();
     }
