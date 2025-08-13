@@ -7,9 +7,9 @@ import java.util.List;
 public class TaskManager {
     private final List<Task> tasks = new ArrayList<>();
 
-    public void addTask(String title) {
+    public void addTask(String title, TaskPriority priority) {
         if (title != null && !title.trim().isEmpty()) {
-            Task newTask = new Task(title);
+            Task newTask = new Task(title, priority);
             tasks.add(newTask);
             System.out.println("Задача додана: " + newTask);
         } else {
@@ -47,7 +47,7 @@ public class TaskManager {
     public boolean updateTaskPriority(long id, TaskPriority newPriority) {
         for (Task task : tasks) {
             if (task.getId() == id) {
-                task.setProirity(newPriority);
+                task.setPriority(newPriority);
                 System.out.println("Пріорітут задачі з ID " + id + " змінено на " + newPriority);
                 return true;
             }

@@ -12,9 +12,9 @@ public class Main {
         String userInput;
 
         // Додамо декілька задач для тестування
-        manager.addTask("Вивчити Java");
-        manager.addTask("Написати звіт");
-        manager.addTask("Написати код");
+        manager.addTask("Вивчити Java", TaskPriority.HIGH);
+        manager.addTask("Написати звіт", TaskPriority.MEDIUM);
+        manager.addTask("Написати код", TaskPriority.LOW);
 
         do {
             System.out.println("\nОпції:");
@@ -33,11 +33,24 @@ public class Main {
                 case "1":
                     System.out.print("Введіть назву задачі: ");
                     String taskTitle = scanner.nextLine();
-                    manager.addTask(taskTitle);
+                    System.out.print("Введіть пріоритет (LOW, MEDIUM, HIGH): ");
+                    String priorityInput = scanner.nextLine().toUpperCase();
+                    try {
+                        TaskPriority priority = TaskPriority.valueOf(priorityInput);
+                        manager.addTask(taskTitle, priority);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Помилка: Некоректний пріоритет. Використовуйте LOW, MEDIUM або HIGH.");
+                    }
                     break;
                 case "2":
                     System.out.println("\n--- Список задач ---");
-                    manager.getAllTasks().forEach(System.out::println);
+                    List<Task> allTasks = manager.getAllTasks();
+                    for (int i = 0; i < allTasks.size(); i++) {
+                        System.out.println(allTasks.get(i));
+                        if (i < allTasks.size() - 1) {
+                            System.out.println("--------------------"); // Розділювач
+                        }
+                    }
                     break;
                 case "3":
                     try {
@@ -73,8 +86,8 @@ public class Main {
                         System.out.print("Введіть ID задачі для зміни пріорітету: ");
                         long taskId = Long.parseLong(scanner.nextLine());
                         System.out.print("Введіть новий пріорітет задачі (LOW, MEDIUM, HIGH): ");
-                        String priorityInput = scanner.nextLine().toUpperCase();
-                        TaskPriority newPriority = TaskPriority.valueOf(priorityInput);
+                        String updatedPriorityInput = scanner.nextLine().toUpperCase();
+                        TaskPriority newPriority = TaskPriority.valueOf(updatedPriorityInput);
                         if (!manager.updateTaskPriority(taskId, newPriority)) {
                             System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
                         }
