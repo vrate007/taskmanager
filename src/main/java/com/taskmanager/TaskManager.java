@@ -55,7 +55,7 @@ public class TaskManager {
         return false;
     }
 
-    // Новий метод для пошуку за назвою
+    //пошуку за назвою
     public List<Task> findTasksByTitle(String title) {
         List<Task> foundTasks = new ArrayList<>();
         if (title == null || title.trim().isEmpty()) {

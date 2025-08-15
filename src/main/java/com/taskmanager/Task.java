@@ -1,7 +1,7 @@
 package com.taskmanager;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter; // Додаємо цей імпорт
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     private static long nextId = 1;
@@ -57,10 +57,10 @@ public class Task {
     }
 
     public String toString() {
-        // Створюємо форматувальник з потрібним шаблоном
+        // Створюємо форматування
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
-        // Форматуємо час для кожного поля
+        // Форматуємо час
         String formattedCreatedAt = createdAt.format(formatter);
         String formattedUpdatedAt = updatedAt.format(formatter);
 

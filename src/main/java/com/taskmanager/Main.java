@@ -6,16 +6,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Запуск програми 'Менеджер задач'...");
-
+        System.out.println("--------------------");
         TaskManager manager = new TaskManager();
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
         // Додамо декілька задач для тестування
         manager.addTask("Вивчити Java", TaskPriority.HIGH);
+        System.out.println("--------------------");
         manager.addTask("Написати звіт", TaskPriority.MEDIUM);
+        System.out.println("--------------------");
         manager.addTask("Написати код", TaskPriority.LOW);
 
+        System.out.println("--------------------");
         do {
             System.out.println("\nОпції:");
             System.out.println("1. Додати нову задачу");
