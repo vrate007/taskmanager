@@ -2,6 +2,9 @@ package com.taskmanager;
 
 import java.util.List;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,8 +20,13 @@ public class Main {
         manager.addTask("Написати звіт", TaskPriority.MEDIUM);
         System.out.println("--------------------");
         manager.addTask("Написати код", TaskPriority.LOW);
-
         System.out.println("--------------------");
+
+
+        // Викликаємо метод збереження у класі TaskManager
+        manager.saveTasksToFile("tasks.csv");
+
+
         do {
             System.out.println("\nОпції:");
             System.out.println("1. Додати нову задачу");
@@ -41,6 +49,7 @@ public class Main {
                     try {
                         TaskPriority priority = TaskPriority.valueOf(priorityInput);
                         manager.addTask(taskTitle, priority);
+                        manager.saveTasksToFile("tasks.csv"); // Автоматичне збереження
                     } catch (IllegalArgumentException e) {
                         System.out.println("Помилка: Некоректний пріоритет. Використовуйте LOW, MEDIUM або HIGH.");
                     }
@@ -61,6 +70,7 @@ public class Main {
                         long taskId = Long.parseLong(scanner.nextLine());
                         if (manager.removeTask(taskId)) {
                             System.out.println("Задача з ID " + taskId + " успішно видалена.");
+                            manager.saveTasksToFile("tasks.csv"); // Автоматичне збереження
                         } else {
                             System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
                         }
@@ -77,12 +87,18 @@ public class Main {
                         TaskStatus newStatus = TaskStatus.valueOf(statusInput);
                         if (!manager.updateTaskStatus(taskId, newStatus)) {
                             System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
+                        } else {
+                            manager.saveTasksToFile("tasks.csv"); // Автоматичне збереження
+                        }
+                        if (!manager.updateTaskStatus(taskId, newStatus)) {
+                            System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("Помилка: ID повинен бути числом.");
                     } catch (IllegalArgumentException e) {
                         System.out.println("Помилка: Некоректний статус. Використовуйте NEW, IN_PROGRESS або COMPLETED.");
                     }
+
                     break;
                 case "5":
                     try {
@@ -91,6 +107,11 @@ public class Main {
                         System.out.print("Введіть новий пріорітет задачі (LOW, MEDIUM, HIGH): ");
                         String updatedPriorityInput = scanner.nextLine().toUpperCase();
                         TaskPriority newPriority = TaskPriority.valueOf(updatedPriorityInput);
+                        if (!manager.updateTaskPriority(taskId, newPriority)) {
+                            System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
+                        } else {
+                            manager.saveTasksToFile("tasks.csv"); // Автоматичне збереження
+                        }
                         if (!manager.updateTaskPriority(taskId, newPriority)) {
                             System.out.println("Помилка: Задача з ID " + taskId + " не знайдена.");
                         }
@@ -112,14 +133,18 @@ public class Main {
                     }
                     break;
                 case "7":
+                    System.out.print("Зберегти зміни у файл? (Y/N): ");
+                    String saveInput = scanner.nextLine().toUpperCase();
+                    if (saveInput.equals("Y")) {
+                        manager.saveTasksToFile("tasks.csv"); // Зберігаємо у файл
+                    }
                     System.out.println("Завершення програми.");
                     break;
                 default:
                     System.out.println("Некоректний вибір. Спробуйте ще раз.");
                     break;
             }
-        } while (!userInput.equals("6"));
-
+        } while (!userInput.equals("7")); // Умова циклу перевіряє вихід за номером 7
         scanner.close();
     }
 }

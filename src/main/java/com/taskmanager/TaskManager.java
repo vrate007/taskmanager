@@ -3,6 +3,9 @@ package com.taskmanager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class TaskManager {
     private final List<Task> tasks = new ArrayList<>();
@@ -69,4 +72,20 @@ public class TaskManager {
         }
         return foundTasks;
     }
+
+
+    public void saveTasksToFile(String filsaveTM) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filsaveTM))) {
+            for (Task task : tasks) { // Перебираємо кожен об'єкт Task
+                writer.write(task.toString()); // Записуємо об'єкт як рядок
+                writer.newLine(); // Переходимо на новий рядок
+                writer.write("________________________________"); // Записуємо об'єкт як рядок
+                writer.newLine(); // Переходимо на новий рядок
+            }
+            System.out.println("Задачі успішно збережено у файл: " + filsaveTM);
+        } catch (IOException e) {
+            System.err.println("Помилка при збереженні файлу: " + e.getMessage());
+        }
+    }
+
 }
