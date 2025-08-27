@@ -6,6 +6,10 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class TaskManager {
     private final List<Task> tasks = new ArrayList<>();
@@ -75,17 +79,18 @@ public class TaskManager {
 
 
     public void saveTasksToFile(String filsaveTM) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filsaveTM))) {
+        try (FileWriter fileWriter = new FileWriter(filsaveTM, false);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+             printWriter.println(Task.getHeader());
             for (Task task : tasks) { // Перебираємо кожен об'єкт Task
-                writer.write(task.toString()); // Записуємо об'єкт як рядок
-                writer.newLine(); // Переходимо на новий рядок
-                writer.write("________________________________"); // Записуємо об'єкт як рядок
-                writer.newLine(); // Переходимо на новий рядок
+                printWriter.println(task.toString());
             }
             System.out.println("Задачі успішно збережено у файл: " + filsaveTM);
         } catch (IOException e) {
             System.err.println("Помилка при збереженні файлу: " + e.getMessage());
         }
     }
+
+
 
 }

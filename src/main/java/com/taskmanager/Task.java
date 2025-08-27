@@ -56,6 +56,12 @@ public class Task {
         return updatedAt;
     }
 
+
+    public static String getHeader() {
+        return "id,title,status,priority,createdAt,updatedAt";
+    }
+
+@Override
     public String toString() {
         // Створюємо форматування
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
@@ -65,12 +71,12 @@ public class Task {
         String formattedUpdatedAt = updatedAt.format(formatter);
 
         return String.format(
-                "ID: %d\n" +
-                        "Назва: %s\n" +
-                        "Статус: %s\n" +
-                        "Пріоритет: %s\n" +
-                        "Створено: %s\n" +
-                        "Оновлено: %s",
+                "%d," +
+                        "%s," +
+                        "%s," +
+                        "%s," +
+                        "%s," +
+                        "%s",
                 id, title, status, priority, formattedCreatedAt, formattedUpdatedAt
         );
     }
