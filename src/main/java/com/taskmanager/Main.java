@@ -14,7 +14,7 @@ public class Main {
         TaskManager manager = new TaskManager();
         Scanner scanner = new Scanner(System.in);
         String userInput;
-
+/*
         // Додамо декілька задач для тестування
         manager.addTask("Вивчити Java", TaskPriority.HIGH);
         System.out.println("--------------------");
@@ -23,9 +23,22 @@ public class Main {
         manager.addTask("Написати код", TaskPriority.LOW);
         System.out.println("--------------------");
 
+*/
+
+        //String filePath = "tasks.csv";
+
+        // Завантажуємо завдання з файлу при запуску програми
+        System.out.println();
+        manager.loadTasksFromFile("tasks.csv");
+
+        // Виводимо завантажені завдання, щоб перевірити
+        System.out.println();
+        for (Task task : manager.getAllTasks()) {
+            System.out.println(task);
+        }
 
         // Викликаємо метод збереження у класі TaskManager
-        manager.saveTasksToFile("tasks.csv");
+      //  manager.saveTasksToFile("tasks.csv");
 
 
         do {
@@ -56,13 +69,10 @@ public class Main {
                     }
                     break;
                 case "2":
-                    System.out.println("\n--- Список задач ---");
-                    List<Task> allTasks = manager.getAllTasks();
-                    for (int i = 0; i < allTasks.size(); i++) {
-                        System.out.println(allTasks.get(i));
-                        if (i < allTasks.size() - 1) {
-                            System.out.println("--------------------"); // Розділювач
-                        }
+                    System.out.println("--- Список задач ---");
+                    // Викликаємо метод, який відображає список завдань
+                    for (Task task : manager.getAllTasks()) {
+                        System.out.println(task);
                     }
                     break;
                 case "3":

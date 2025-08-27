@@ -80,4 +80,12 @@ public class Task {
                 id, title, status, priority, formattedCreatedAt, formattedUpdatedAt
         );
     }
+    public Task(long id, String title, TaskStatus status, TaskPriority priority, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.status = status;
+        this.priority = priority;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
