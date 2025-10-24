@@ -1,7 +1,8 @@
-package org.acme;
+package org.acme.domain;
 
 public enum TaskStatus {
     NEW,
     IN_PROGRESS,
-    COMPLETED
+    DONE,
+    CANCELLED;
 }

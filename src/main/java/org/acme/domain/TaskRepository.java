@@ -1,25 +1,26 @@
-package org.acme;
+package org.acme.domain;
 
 import java.util.List;
-import java.util.Optional; // 🌟 Імпорт Optional
+import java.util.Optional;
 
-public interface TaskManagerInterface {
+/**
+ * Інтерфейс, що визначає контракт Репозиторію для сутностей Task.
+ * Містить всі CRUD-операції та методи доступу до даних.
+ */
+public interface TaskRepository {
 
     // --- C (Create) ---
-    // 🌟 Повертаємо створений об'єкт Task
     Task addTask(String title, TaskPriority priority);
 
     // --- R (Read) ---
     List<Task> getAllTasks();
-    // 🌟 Додаємо метод для читання за ID з Optional
     Optional<Task> getTaskById(long id);
 
     // --- U (Update) ---
-
-    // 🌟 Узагальнений метод для оновлення. Повертаємо Optional<Task>
+    // Узагальнений метод для оновлення
     Optional<Task> updateTask(long id, String newTitle, TaskStatus newStatus, TaskPriority newPriority);
 
-    // Існуючі методи оновлення можна залишити для спрощення бізнес-логіки
+    // Часткові оновлення
     boolean updateTaskStatus(long id, TaskStatus newStatus);
     boolean updateTaskPriority(long id, TaskPriority newPriority);
 
@@ -35,4 +36,7 @@ public interface TaskManagerInterface {
     List<Task> sortTasksByCreatedAt();
     List<Task> sortTasksByPriority();
     List<Task> sortTasksByStatus();
+
+    // Методи для керування внутрішнім станом (ініціалізація кешу)
+    void setInitialTasks(List<Task> initialTasks);
 }
